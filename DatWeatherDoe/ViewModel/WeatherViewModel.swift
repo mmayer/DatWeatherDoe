@@ -124,7 +124,8 @@ final class WeatherViewModel: WeatherViewModelType {
                 unit: TemperatureUnit(rawValue: configManager.temperatureUnit) ?? .fahrenheit,
                 isRoundingOff: configManager.isRoundingOffData
             ),
-            isShowingHumidity: configManager.isShowingHumidity
+            isShowingHumidity: configManager.isShowingHumidity,
+            isShowingRiseSet: configManager.isShowingRiseSet
         )
     }
 
