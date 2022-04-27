@@ -40,7 +40,19 @@ final class ConfigureViewModel: ObservableObject {
     @Published var isShowingHumidity: Bool {
         didSet { configManager.isShowingHumidity = isShowingHumidity }
     }
-    
+
+    @Published var isShowingRise: Bool {
+        didSet { configManager.isShowingRise = isShowingRise }
+    }
+
+    @Published var isShowingSet: Bool {
+        didSet { configManager.isShowingSet = isShowingSet }
+    }
+
+    @Published var isUsing24Hr: Bool {
+        didSet { configManager.isUsing24Hr = isUsing24Hr }
+    }
+
     @Published var isRoundingOffData: Bool {
         didSet { configManager.isRoundingOffData = isRoundingOffData }
     }
@@ -71,6 +83,9 @@ final class ConfigureViewModel: ObservableObject {
         
         isShowingWeatherIcon = configManager.isShowingWeatherIcon
         isShowingHumidity = configManager.isShowingHumidity
+        isShowingRise = configManager.isShowingRise
+        isShowingSet = configManager.isShowingSet
+        isUsing24Hr = configManager.isUsing24Hr
         isRoundingOffData = configManager.isRoundingOffData
         isWeatherConditionAsTextEnabled = configManager.isWeatherConditionAsTextEnabled
         
@@ -97,6 +112,9 @@ final class ConfigureViewModel: ObservableObject {
         configCommitter.setOtherOptionsForConfig(
             refreshInterval: refreshInterval,
             isShowingHumidity: isShowingHumidity,
+            isShowingRise: isShowingRise,
+            isShowingSet: isShowingSet,
+            isUsing24Hr: isUsing24Hr,
             isRoundingOffData: isRoundingOffData,
             isWeatherConditionAsTextEnabled: isWeatherConditionAsTextEnabled
         )
