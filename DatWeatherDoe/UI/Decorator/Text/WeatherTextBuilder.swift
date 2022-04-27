@@ -12,6 +12,7 @@ final class WeatherTextBuilder {
         let isWeatherConditionAsTextEnabled: Bool
         let temperatureOptions: TemperatureTextBuilder.Options
         let isShowingHumidity: Bool
+        let isShowingSetRise: Bool
     }
     
     private let response: WeatherAPIResponse
@@ -31,7 +32,8 @@ final class WeatherTextBuilder {
     func build() -> String {
         let finalString = buildWeatherConditionAsText() |>
         appendTemperatureAsText |>
-        appendHumidityText
+        appendHumidityText |>
+        appendSetRiseText
         
         return finalString
     }
@@ -57,6 +59,17 @@ final class WeatherTextBuilder {
         return HumidityTextBuilder(
             initial: initial,
             humidity: response.humidity,
+            logger: logger
+        ).build()
+    }
+
+    private func appendSetRiseText(initial: String) -> String {
+        guard options.isShowingSetRise else { return initial }
+
+        return SetRiseTextBuilder(
+            initial: initial,
+            sunset: response.sunset,
+            sunrise: response.sunrise,
             logger: logger
         ).build()
     }

@@ -74,7 +74,14 @@ struct ConfigureView: View {
                     Toggle(isOn: $viewModel.isShowingHumidity) {}
                         .toggleStyle(CheckboxToggleStyle())
                 }
-                
+
+                HStack {
+                    Text(LocalizedStringKey("Show Sunset/Rise"))
+                    Spacer()
+                    Toggle(isOn: $viewModel.isShowingSetRise) {}
+                        .toggleStyle(CheckboxToggleStyle())
+                }
+
                 HStack {
                     Text(LocalizedStringKey("Round-off Data"))
                     Spacer()

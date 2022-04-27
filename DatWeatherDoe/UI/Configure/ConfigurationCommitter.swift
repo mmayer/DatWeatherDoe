@@ -22,11 +22,13 @@ final class ConfigurationCommitter {
     func setOtherOptionsForConfig(
         refreshInterval: RefreshInterval,
         isShowingHumidity: Bool,
+        isShowingSetRise: Bool,
         isRoundingOffData: Bool,
         isWeatherConditionAsTextEnabled: Bool
     ) {
         configManager.refreshInterval = refreshInterval.rawValue
         configManager.isShowingHumidity = isShowingHumidity
+        configManager.isShowingSetRise = isShowingSetRise
         configManager.isRoundingOffData = isRoundingOffData
         configManager.isWeatherConditionAsTextEnabled = isWeatherConditionAsTextEnabled
     }
