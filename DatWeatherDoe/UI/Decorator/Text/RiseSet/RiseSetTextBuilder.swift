@@ -16,7 +16,7 @@ final class RiseSetTextBuilder {
     private let use24Hr: Bool
     private let logger: DatWeatherDoeLoggerType
 
-    func getDateFormatter(use24Hr: Bool) -> DateFormatter
+    func getDateFormatter() -> DateFormatter
     {
         let formatter = DateFormatter()
         // BEWARE: If, under System Preferences -> "Language and Region", the checkbox
@@ -73,7 +73,6 @@ final class RiseSetTextBuilder {
         if ts == 0 {
             return nil
         }
-        let riseSetFormatter = getDateFormatter(use24Hr: use24Hr)
-        return riseSetFormatter.string(from: Date(timeIntervalSince1970: ts))
+        return getDateFormatter().string(from: Date(timeIntervalSince1970: ts))
     }
 }
