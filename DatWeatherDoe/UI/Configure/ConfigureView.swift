@@ -77,14 +77,14 @@ struct ConfigureView: View {
 
                 Group {
                     HStack {
-                        Text(LocalizedStringKey("Show Sun Rise"))
+                        Text(LocalizedStringKey("Show Sunrise"))
                         Spacer()
                         Toggle(isOn: $viewModel.isShowingRise) {}
                             .toggleStyle(CheckboxToggleStyle())
                     }
 
                     HStack {
-                        Text(LocalizedStringKey("Show Sun Set"))
+                        Text(LocalizedStringKey("Show Sunset"))
                         Spacer()
                         Toggle(isOn: $viewModel.isShowingSet) {}
                             .toggleStyle(CheckboxToggleStyle())
