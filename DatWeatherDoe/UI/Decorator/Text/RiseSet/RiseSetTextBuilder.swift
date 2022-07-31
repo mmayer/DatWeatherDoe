@@ -16,20 +16,6 @@ final class RiseSetTextBuilder {
     private let use24Hr: Bool
     private let logger: DatWeatherDoeLoggerType
 
-    func getDateFormatter() -> DateFormatter
-    {
-        let formatter = DateFormatter()
-        // BEWARE: If, under System Preferences -> "Language and Region", the checkbox
-        // "24-Hour Time" is ticked, this will return the time in 24 hour format
-        // no matter what. In other words, macOS overrides the meaning of format
-        // specifiers "h" and "hh" to mean "HH" and format specifier "a" will expand
-        // to the empty string ("h:mm a" becomes equivalent to "HH:mm"). The application
-        // cannot influence this behaviour. It must be changed in System Preferences.
-        formatter.dateFormat = use24Hr ? "HH:mm" : "h:mm a"
-
-        return formatter
-    }
-
     init(
         initial: String,
         sunset: TimeInterval = 0,
@@ -74,5 +60,18 @@ final class RiseSetTextBuilder {
             return nil
         }
         return getDateFormatter().string(from: Date(timeIntervalSince1970: ts))
+    }
+
+    private func getDateFormatter() -> DateFormatter {
+        let formatter = DateFormatter()
+        // BEWARE: If, under System Preferences -> "Language and Region", the checkbox
+        // "24-Hour Time" is ticked, this will return the time in 24 hour format
+        // no matter what. In other words, macOS overrides the meaning of format
+        // specifiers "h" and "hh" to mean "HH" and format specifier "a" will expand
+        // to the empty string ("h:mm a" becomes equivalent to "HH:mm"). The application
+        // cannot influence this behaviour. It must be changed in System Preferences.
+        formatter.dateFormat = use24Hr ? "HH:mm" : "h:mm a"
+
+        return formatter
     }
 }
