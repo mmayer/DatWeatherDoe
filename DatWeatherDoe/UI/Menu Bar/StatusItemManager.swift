@@ -44,6 +44,7 @@ final class StatusItemManager {
                 weatherData: weatherData,
                 temperatureOptions: temperatureOptions
             )
+            self.sunRiseSetMenuItem?.title = self.getSunRiseSetFrom(weatherData: weatherData)
             self.conditionMenuItem?.title = self.getConditionHumidityAndWindSpeedItemFrom(weatherData: weatherData)
         }
     }
@@ -77,6 +78,18 @@ final class StatusItemManager {
         ).build()
     }
     
+    private func getSunRiseSetFrom(weatherData: WeatherData) -> String {
+        let logger = DatWeatherDoeLogger()
+        let sun = WeatherConditionImageMapper().map(.sunny)
+        sunRiseSetMenuItem?.image = sun
+        let rs = RiseSetTextBuilder(initial: "",
+                                    sunset: weatherData.sunset,
+                                    sunrise: weatherData.sunrise,
+                                    use24Hr: true,
+                                    logger: logger)
+        return " - " + rs.build()
+    }
+
     private func getConditionHumidityAndWindSpeedItemFrom(weatherData: WeatherData) -> String {
         let windSpeedStr = [String(weatherData.windData.speed), "m/s"].joined()
         let windDegreesStr = [String(weatherData.windData.degrees), TemperatureHelpers.degreeString].joined()
@@ -93,5 +106,6 @@ final class StatusItemManager {
     
     private var locationMenuItem: NSMenuItem? { statusItem.menu?.item(at: 0) }
     private var temperatureForecastMenuItem: NSMenuItem? { statusItem.menu?.item(at: 1) }
-    private var conditionMenuItem: NSMenuItem? { statusItem.menu?.item(at: 2) }
+    private var sunRiseSetMenuItem: NSMenuItem? { statusItem.menu?.item(at: 2) }
+    private var conditionMenuItem: NSMenuItem? { statusItem.menu?.item(at: 3) }
 }
