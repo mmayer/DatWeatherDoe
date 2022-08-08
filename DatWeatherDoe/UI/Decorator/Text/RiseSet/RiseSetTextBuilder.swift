@@ -49,7 +49,7 @@ final class RiseSetTextBuilder {
             ret = "↑\(sunRiseText)"
         }
         if let sunSetText = sunSetOpt {
-            ret += "↓\(sunSetText)"
+            ret += " ↓\(sunSetText)"
         }
 
         return ret
