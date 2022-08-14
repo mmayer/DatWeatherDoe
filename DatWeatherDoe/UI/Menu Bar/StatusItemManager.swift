@@ -11,13 +11,15 @@ import AppKit
 final class StatusItemManager {
     
     var button: NSStatusBarButton? { statusItem.button }
+    private var configManager: ConfigManagerType
     
     private let statusItem = NSStatusBar.system.statusItem(
         withLength: NSStatusItem.variableLength
     )
     private lazy var unknownString = NSLocalizedString("Unknown", comment: "Unknown location")
 
-    init(menu: NSMenu, configureSelector: Selector) {
+    init(menu: NSMenu, configManager: ConfigManagerType, configureSelector: Selector) {
+        self.configManager = configManager
         statusItem.menu = menu
         statusItem.button?.action = configureSelector
 
@@ -97,7 +99,8 @@ final class StatusItemManager {
     private func getSunRiseSetFrom(weatherData: WeatherData) -> String {
         RiseSetTextBuilder(
             sunset: weatherData.sunset,
-            sunrise: weatherData.sunrise
+            sunrise: weatherData.sunrise,
+            use24Hr: configManager.isUsing24Hr
         ).build()
     }
 

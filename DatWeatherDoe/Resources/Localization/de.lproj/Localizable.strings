@@ -131,6 +131,15 @@
 /* Show humidity */
 "Show Humidity" = "Luftfeuchtigkeit anzeigen";
 
+/* Show Sunrise */
+"Show Sunrise" = "Sonnenaufgang anzeigen";
+
+/* Show Sunset */
+"Show Sunset" = "Sonnenuntergang anzeigen";
+
+/* Use 24-hour clock */
+"Use 24-hour clock" = "Im 24h-Format anzeigen";
+
 /* Temperature unit */
 "Unit" = "Einheit";
 

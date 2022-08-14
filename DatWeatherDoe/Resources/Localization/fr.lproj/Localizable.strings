@@ -122,6 +122,15 @@
 /* Show humidity */
 "Show Humidity" = "Afficher l’humidité";
 
+/* Show Sunrise */
+"Show Sunrise" = "Afficher coucher du soleil";
+
+/* Show Sunset */
+"Show Sunset" = "Afficher lever du soleil";
+
+/* Use 24-hour clock */
+"Use 24-hour clock" = "Utiliser l'heure de 24 heures";
+
 /* Snow weather condition */
 "Snow" = "Neige";
 

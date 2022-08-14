@@ -31,6 +31,7 @@ final class MenuBarManager {
     ) {
         statusItemManager = StatusItemManager(
             menu: buildMenuWith(options: options),
+            configManager: configManager,
             configureSelector: options.configureSelector
         )
         popOverManager = PopoverManager(

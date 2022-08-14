@@ -13,6 +13,7 @@ final class RiseSetTextBuilder {
     private let initial: String
     private let sunset: TimeInterval
     private let sunrise: TimeInterval
+    private let use24Hr: Bool
 
     private let upArrowStr = "⬆"
     private let downArrowStr = "⬇"
@@ -20,11 +21,13 @@ final class RiseSetTextBuilder {
     init(
         initial: String = "",
         sunset: TimeInterval = 0,
-        sunrise: TimeInterval = 0
+        sunrise: TimeInterval = 0,
+        use24Hr: Bool = false
     ) {
         self.initial = initial
         self.sunset = sunset
         self.sunrise = sunrise
+        self.use24Hr = use24Hr
     }
 
     func build() -> String {
@@ -62,7 +65,15 @@ final class RiseSetTextBuilder {
 
     private func getDateFormatter() -> DateFormatter {
         let formatter = DateFormatter()
-        formatter.timeStyle = .short
+
+        // BEWARE: If, under System Preferences -> "Language and Region", the checkbox
+        // "24-Hour Time" is ticked, this will return the time in 24 hour format
+        // no matter what. In other words, macOS overrides the meaning of format
+        // specifiers "h" and "hh" to mean "HH" and format specifier "a" will expand
+        // to the empty string ("h:mm a" becomes equivalent to "HH:mm"). The application
+        // cannot influence this behaviour. It must be changed in System Preferences.
+        formatter.dateFormat = use24Hr ? "HH:mm" : "h:mm a"
+
         return formatter
     }
 }

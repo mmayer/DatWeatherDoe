@@ -131,6 +131,15 @@
 /* Show humidity */
 "Show Humidity" = "Show Humidity";
 
+/* Show Sunrise */
+"Show Sunrise" = "Show Sunrise";
+
+/* Show Sunset */
+"Show Sunset" = "Show Sunset";
+
+/* Use 24-hour clock */
+"Use 24-hour clock" = "Use 24-hour clock";
+
 /* Temperature unit */
 "Unit" = "Unit";
 

@@ -12,6 +12,9 @@ final class WeatherTextBuilder {
         let isWeatherConditionAsTextEnabled: Bool
         let temperatureOptions: TemperatureTextBuilder.Options
         let isShowingHumidity: Bool
+        let isShowingRise: Bool
+        let isShowingSet: Bool
+        let isUsing24Hr: Bool
     }
     
     private let response: WeatherAPIResponse
@@ -31,8 +34,10 @@ final class WeatherTextBuilder {
     func build() -> String {
         let finalString = buildWeatherConditionAsText() |>
         appendTemperatureAsText |>
-        appendHumidityText
-        
+        appendHumidityText |>
+        appendRiseText |>
+        appendSetText
+
         return finalString
     }
     
@@ -58,6 +63,26 @@ final class WeatherTextBuilder {
             initial: initial,
             humidity: response.humidity,
             logger: logger
+        ).build()
+    }
+
+    private func appendRiseText(initial: String) -> String {
+        guard options.isShowingRise else { return initial }
+
+        return RiseSetTextBuilder(
+            initial: initial,
+            sunrise: response.sunrise,
+            use24Hr: self.options.isUsing24Hr
+        ).build()
+    }
+
+    private func appendSetText(initial: String) -> String {
+        guard options.isShowingSet else { return initial }
+
+        return RiseSetTextBuilder(
+            initial: initial,
+            sunset: response.sunset,
+            use24Hr: self.options.isUsing24Hr
         ).build()
     }
 }
