@@ -12,43 +12,19 @@ import LaunchAtLogin
 
 final class ConfigureViewModel: ObservableObject {
     
-    @Published var temperateUnit: TemperatureUnit {
-        didSet { configManager.temperatureUnit = temperateUnit.rawValue }
-    }
-    
-    @Published var weatherSource: WeatherSource {
-        didSet {
-            configManager.weatherSource = weatherSource.rawValue
-            updateWeatherSource()
-        }
-    }
+    @Published var temperateUnit: TemperatureUnit
+    @Published var weatherSource: WeatherSource
+
     @Published private(set) var weatherSourceTextHint = ""
     @Published private(set) var weatherSourceTextFieldDisabled = false
     @Published private(set) var weatherSourcePlaceholder = ""
-    @Published var weatherSourceText = "" {
-        didSet { configManager.weatherSourceText = weatherSourceText }
-    }
-    
-    @Published var refreshInterval: RefreshInterval {
-        didSet { configManager.refreshInterval = refreshInterval.rawValue }
-    }
-    
-    @Published var isShowingWeatherIcon: Bool {
-        didSet { configManager.isShowingWeatherIcon = isShowingWeatherIcon }
-    }
-    
-    @Published var isShowingHumidity: Bool {
-        didSet { configManager.isShowingHumidity = isShowingHumidity }
-    }
-    
-    @Published var isRoundingOffData: Bool {
-        didSet { configManager.isRoundingOffData = isRoundingOffData }
-    }
-    
-    @Published var isWeatherConditionAsTextEnabled: Bool {
-        didSet { configManager.isWeatherConditionAsTextEnabled = isWeatherConditionAsTextEnabled }
-    }
-    
+
+    @Published var weatherSourceText = ""
+    @Published var refreshInterval: RefreshInterval
+    @Published var isShowingWeatherIcon: Bool
+    @Published var isShowingHumidity: Bool
+    @Published var isRoundingOffData: Bool
+    @Published var isWeatherConditionAsTextEnabled: Bool
     @Published var launchAtLogin = LaunchAtLogin.observable
     
     private let configManager: ConfigManagerType
@@ -76,6 +52,15 @@ final class ConfigureViewModel: ObservableObject {
         
         updateWeatherSource()
     }
+
+    func closeConfigWithoutSaving() {
+        // Configuration change was aborted, so re-initialize the UI variables
+        // from the existing configuration.
+        isShowingWeatherIcon = configManager.isShowingWeatherIcon
+        isShowingHumidity = configManager.isShowingHumidity
+        isRoundingOffData = configManager.isRoundingOffData
+        popoverManager?.togglePopover(nil)
+    }
     
     func saveAndCloseConfig() {
         saveConfig()
@@ -93,6 +78,13 @@ final class ConfigureViewModel: ObservableObject {
     
     private func saveConfig() {
         let configCommitter = ConfigurationCommitter(configManager: configManager)
+
+        // Store the current configuration
+        configManager.isShowingWeatherIcon = isShowingWeatherIcon
+        configManager.isShowingHumidity = isShowingHumidity
+        configManager.isRoundingOffData = isRoundingOffData
+        configManager.isWeatherConditionAsTextEnabled = isWeatherConditionAsTextEnabled
+
         configCommitter.setWeatherSource(weatherSource, sourceText: weatherSourceText)
         configCommitter.setOtherOptionsForConfig(
             refreshInterval: refreshInterval,

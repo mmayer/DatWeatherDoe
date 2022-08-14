@@ -97,8 +97,13 @@ struct ConfigureView: View {
                 }
             }
             
-            Button(LocalizedStringKey("Done")) {
-                viewModel.saveAndCloseConfig()
+            HStack {
+                Button(LocalizedStringKey("Save")) {
+                    viewModel.saveAndCloseConfig()
+                }
+                Button(LocalizedStringKey("Cancel")) {
+                    viewModel.closeConfigWithoutSaving()
+                }
             }
         }
         .padding()

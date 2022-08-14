@@ -98,7 +98,8 @@
 "Thunderstorm" = "Gewitter";
 
 /* Finish configuring app */
-"Done" = "Fertig";
+"Save" = "Speichern";
+"Cancel" = "Abbrechen";
 
 /* Weather based on Lat/Long */
 "Lat/Long" = "Breite/Länge";
