@@ -71,7 +71,8 @@
 "Cloudy" = "Nuageux";
 
 /* Finish configuring app */
-"Done" = "Terminé";
+"Save" = "Sauver";
+"Cancel" = "Annuler";
 
 /* Freezing rain weather condition */
 "Freezing rain" = "Pluie verglaçante";

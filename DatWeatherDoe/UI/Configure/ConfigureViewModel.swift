@@ -12,43 +12,20 @@ import LaunchAtLogin
 
 final class ConfigureViewModel: ObservableObject {
     
-    @Published var temperateUnit: TemperatureUnit {
-        didSet { configManager.temperatureUnit = temperateUnit.rawValue }
-    }
-    
-    @Published var weatherSource: WeatherSource {
-        didSet {
-            configManager.weatherSource = weatherSource.rawValue
-            updateWeatherSource()
-        }
-    }
+    // Sorry US, but the world at large is using Celsius. Let's start with that.
+    @Published var temperateUnit: TemperatureUnit = .celsius
+    @Published var weatherSource: WeatherSource = .location
+
     @Published private(set) var weatherSourceTextHint = ""
     @Published private(set) var weatherSourceTextFieldDisabled = false
     @Published private(set) var weatherSourcePlaceholder = ""
-    @Published var weatherSourceText = "" {
-        didSet { configManager.weatherSourceText = weatherSourceText }
-    }
-    
-    @Published var refreshInterval: RefreshInterval {
-        didSet { configManager.refreshInterval = refreshInterval.rawValue }
-    }
-    
-    @Published var isShowingWeatherIcon: Bool {
-        didSet { configManager.isShowingWeatherIcon = isShowingWeatherIcon }
-    }
-    
-    @Published var isShowingHumidity: Bool {
-        didSet { configManager.isShowingHumidity = isShowingHumidity }
-    }
-    
-    @Published var isRoundingOffData: Bool {
-        didSet { configManager.isRoundingOffData = isRoundingOffData }
-    }
-    
-    @Published var isWeatherConditionAsTextEnabled: Bool {
-        didSet { configManager.isWeatherConditionAsTextEnabled = isWeatherConditionAsTextEnabled }
-    }
-    
+
+    @Published var weatherSourceText = ""
+    @Published var refreshInterval: RefreshInterval = .thirtyMinutes
+    @Published var isShowingWeatherIcon: Bool = false
+    @Published var isShowingHumidity: Bool = false
+    @Published var isRoundingOffData: Bool = false
+    @Published var isWeatherConditionAsTextEnabled: Bool = false
     @Published var launchAtLogin = LaunchAtLogin.observable
     
     private let configManager: ConfigManagerType
@@ -58,6 +35,24 @@ final class ConfigureViewModel: ObservableObject {
         self.configManager = configManager
         self.popoverManager = popoverManager
         
+        initalizeVariables()
+        updateWeatherSource()
+    }
+
+    func closeConfigWithoutSaving() {
+        // The user may have changed the UI elements, so after aborting we
+        // need to re-initialize them to match the actual configuration which
+        // did not change.
+        initalizeVariables()
+        popoverManager?.togglePopover(nil)
+    }
+
+    func saveAndCloseConfig() {
+        saveConfig()
+        popoverManager?.togglePopover(nil)
+    }
+
+    private func initalizeVariables() {
         temperateUnit = TemperatureUnit(rawValue: configManager.temperatureUnit)!
         weatherSource = WeatherSource(rawValue: configManager.weatherSource)!
        
@@ -73,13 +68,6 @@ final class ConfigureViewModel: ObservableObject {
         isShowingHumidity = configManager.isShowingHumidity
         isRoundingOffData = configManager.isRoundingOffData
         isWeatherConditionAsTextEnabled = configManager.isWeatherConditionAsTextEnabled
-        
-        updateWeatherSource()
-    }
-    
-    func saveAndCloseConfig() {
-        saveConfig()
-        popoverManager?.togglePopover(nil)
     }
     
     private func updateWeatherSource() {
@@ -90,9 +78,16 @@ final class ConfigureViewModel: ObservableObject {
         }
         weatherSourcePlaceholder = weatherSource.placeholder
     }
-    
+
     private func saveConfig() {
         let configCommitter = ConfigurationCommitter(configManager: configManager)
+
+        // Store the current configuration
+        configManager.isShowingWeatherIcon = isShowingWeatherIcon
+        configManager.isShowingHumidity = isShowingHumidity
+        configManager.isRoundingOffData = isRoundingOffData
+        configManager.isWeatherConditionAsTextEnabled = isWeatherConditionAsTextEnabled
+
         configCommitter.setWeatherSource(weatherSource, sourceText: weatherSourceText)
         configCommitter.setOtherOptionsForConfig(
             refreshInterval: refreshInterval,

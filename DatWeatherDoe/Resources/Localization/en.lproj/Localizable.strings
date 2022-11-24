@@ -98,7 +98,8 @@
 "Thunderstorm" = "Thunderstorm";
 
 /* Finish configuring app */
-"Done" = "Done";
+"Save" = "Save";
+"Cancel" = "Cancel";
 
 /* Weather based on Lat/Long */
 "Lat/Long" = "Lat/Long";
