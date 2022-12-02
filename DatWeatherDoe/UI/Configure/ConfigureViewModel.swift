@@ -36,7 +36,6 @@ final class ConfigureViewModel: ObservableObject {
         self.popoverManager = popoverManager
         
         initalizeVariables()
-        updateWeatherSource()
     }
 
     func closeConfigWithoutSaving() {
@@ -53,6 +52,14 @@ final class ConfigureViewModel: ObservableObject {
     }
 
     private func initalizeVariables() {
+        /*
+         @Published private(set) var weatherSourceTextHint = ""
+         @Published private(set) var weatherSourceTextFieldDisabled = false
+         @Published private(set) var weatherSourcePlaceholder = ""
+
+         @Published var weatherSourceText = ""
+         @Published var launchAtLogin = LaunchAtLogin.observable
+         */
         temperateUnit = TemperatureUnit(rawValue: configManager.temperatureUnit)!
         weatherSource = WeatherSource(rawValue: configManager.weatherSource)!
        
@@ -68,6 +75,8 @@ final class ConfigureViewModel: ObservableObject {
         isShowingHumidity = configManager.isShowingHumidity
         isRoundingOffData = configManager.isRoundingOffData
         isWeatherConditionAsTextEnabled = configManager.isWeatherConditionAsTextEnabled
+
+        updateWeatherSource()
     }
     
     private func updateWeatherSource() {
